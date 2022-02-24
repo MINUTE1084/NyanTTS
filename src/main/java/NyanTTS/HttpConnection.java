@@ -17,7 +17,7 @@ public class HttpConnection {
             http.setRequestMethod("POST");
 
             http.setRequestProperty("Content-Type", "application/xml");
-            http.setRequestProperty("Authorization", "KakaoAK ");
+            http.setRequestProperty("Authorization", "KakaoAK " + NyanMain.kakaoKey);
 
             StringBuffer buffer = new StringBuffer();
             buffer.append(pList);
@@ -45,7 +45,7 @@ public class HttpConnection {
         return null;
     }
 
-    private static String randomString() {
+    public static String randomString() {
         int leftLimit = 48;
         int rightLimit = 122;
         int targetStringLength = 10;

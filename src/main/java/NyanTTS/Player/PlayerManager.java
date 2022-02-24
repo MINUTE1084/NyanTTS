@@ -42,18 +42,17 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 ttsManager.scheduler.queue(track);
-                System.out.println("A");
 
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                System.out.println("C");
+
             }
 
             @Override
             public void noMatches() {
-                System.out.println("C");
+
             }
 
             @Override
