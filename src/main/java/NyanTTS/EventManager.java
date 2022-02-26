@@ -61,9 +61,12 @@ public class EventManager extends ListenerAdapter {
         badWordList.add("뻑유");
         badWordList.add("새끼");
         badWordList.add("시발");
-        badWordList.add("애자");
+        badWordList.add("C발");
+        badWordList.add("c발");
         badWordList.add("씨발");
         badWordList.add("씨빨");
+        badWordList.add("sibal");
+        badWordList.add("애자");
         badWordList.add("썅");
         badWordList.add("지랄");
         badWordList.add("좆");
@@ -84,9 +87,10 @@ public class EventManager extends ListenerAdapter {
         badWordList.add("후빨");
 
         emojiList = new HashMap<>();
-        emojiList.put("^^", "눈웃음");
+        emojiList.put("\\^\\^", "눈웃음");
+        emojiList.put("ㅡㅡ", "찍찍");
         emojiList.put("●▅▇█▇▆▅▄▇", "누워!");
-        emojiList.put("@==(^o^)@", "태보해!");
+        emojiList.put("@==\\(\\^o\\^\\)@", "태보해!");
     }
 
     @Override
@@ -121,7 +125,7 @@ public class EventManager extends ListenerAdapter {
 
                 String ttsStr = "<speak>" +
                                     "<voice name=\"WOMAN_DIALOG_BRIGHT\">" +
-                                        "<prosody rate=\"slow\" volume=\"soft\">"
+                                        "<prosody volume=\"soft\">"
                                             + event.getMember().getNickname() + "님이 입장하셨습니다." +
                                         "</prosody>" +
                                     "</voice>" +
@@ -165,7 +169,7 @@ public class EventManager extends ListenerAdapter {
 
                 String ttsStr = "<speak>" +
                         "<voice name=\"WOMAN_DIALOG_BRIGHT\">" +
-                        "<prosody rate=\"slow\" volume=\"soft\">"
+                        "<prosody volume=\"soft\">"
                         + event.getMember().getNickname() + "님이 퇴장하셨습니다." +
                         "</prosody>" +
                         "</voice>" +
@@ -209,7 +213,7 @@ public class EventManager extends ListenerAdapter {
 
                 String ttsStr = "<speak>" +
                         "<voice name=\"WOMAN_DIALOG_BRIGHT\">" +
-                        "<prosody rate=\"slow\" volume=\"soft\">"
+                        "<prosody volume=\"soft\">"
                         + event.getMember().getNickname() + "님이 다른 방으로 이동하셨습니다." +
                         "</prosody>" +
                         "</voice>" +
@@ -248,7 +252,7 @@ public class EventManager extends ListenerAdapter {
 
                 String ttsStr = "<speak>" +
                         "<voice name=\"WOMAN_DIALOG_BRIGHT\">" +
-                        "<prosody rate=\"slow\" volume=\"soft\">"
+                        "<prosody volume=\"soft\">"
                         + event.getMember().getNickname() + "님이 다른 방에서 이동하셨습니다." +
                         "</prosody>" +
                         "</voice>" +
@@ -486,6 +490,11 @@ public class EventManager extends ListenerAdapter {
                 isEnd = false;
                 continue;
             }
+            if (newStr.contains("ㄷㄷ")){
+                newStr = newStr.replaceAll("ㄷ", "덜");
+                isEnd = false;
+                continue;
+            }
             if (newStr.contains("ㄷㅊ")){
                 newStr = newStr.replaceAll("ㄷㅊ", "조용히 해");
                 channel.sendMessage("순화된 말로 변경합니다.").queue();
@@ -531,7 +540,7 @@ public class EventManager extends ListenerAdapter {
                 continue;
             }
             if (newStr.contains("ㄹㅇ")){
-                newStr = newStr.replaceAll("ㄹㅇ", "리얼");
+                newStr = newStr.replaceAll("ㄹㅇ", "레알");
                 isEnd = false;
                 continue;
             }
@@ -751,6 +760,7 @@ public class EventManager extends ListenerAdapter {
             newStr = newStr.replaceAll("\\?", "물음표");
             newStr = newStr.replaceAll("!", "느낌표");
         }
+
         newStr = newStr.replaceAll("@", "골뱅이");
         newStr = newStr.replaceAll("#", "샵");
         newStr = newStr.replaceAll("%", "퍼센트");
@@ -762,8 +772,6 @@ public class EventManager extends ListenerAdapter {
         newStr = newStr.replaceAll("_", "언더바");
         newStr = newStr.replaceAll("=", "는");
         newStr = newStr.replaceAll("\\+", "더하기");
-        newStr = newStr.replaceAll(":", "콜론");
-        newStr = newStr.replaceAll(";", "세미콜론");
         return newStr;
     }
 
