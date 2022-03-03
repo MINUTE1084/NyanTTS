@@ -2,10 +2,7 @@ package NyanTTS;
 
 import NyanTTS.Player.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.AudioChannel;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -14,18 +11,15 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
-import org.w3c.dom.Text;
 
 import javax.imageio.ImageIO;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class EventManager extends ListenerAdapter {
     private ArrayList<String> badWordList;
@@ -145,6 +139,21 @@ public class EventManager extends ListenerAdapter {
         AudioChannel connectedChannel = event.getChannelLeft();
 
         if (botChannel != null && botChannel.equals(connectedChannel)) {
+
+            boolean remainUser = false;
+            List<Member> members = connectedChannel.getMembers();
+            for (Member m : members){
+                if (!m.getUser().isBot()) remainUser = true;
+            }
+
+            if (!remainUser) {
+                joinList.clear();
+                PlayerManager.getInstance().getTTSManager(event.getGuild()).audioPlayer.stopTrack();
+                PlayerManager.getInstance().getTTSManager(event.getGuild()).scheduler.resetQueue();
+                botChannel.getGuild().getAudioManager().closeAudioConnection();
+                return;
+            }
+
             if (!joinList.contains(event.getMember().getNickname())) {
                 joinList.add(event.getMember().getNickname());
                 Timer timer = new Timer();
